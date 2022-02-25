@@ -20,8 +20,8 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
     private static final int DATABASE_VERSION = 1;
 
     private static final String TABLE = "word_entries";
-    private static final String KEY_ID = "_id";
-    private static final String KEY_WORD = "word";
+    public static final String KEY_ID = "_id";
+    public static final String KEY_WORD = "word";
 
 
     private static final String CREATE_TABLE =
@@ -176,4 +176,25 @@ public class WordListOpenHelper extends SQLiteOpenHelper {
     }
 
 
+    public Cursor search(String word) {
+
+        String[] columns = new String[]{KEY_WORD};
+        String selection = KEY_WORD + " LIKE ?";
+        word = "%" + word + "%";
+        String[] selectionArgs = new String[]{word};
+
+        Cursor cursor = null;
+
+        try{
+
+            if(mReadableDB == null){
+                mReadableDB = getReadableDatabase();
+            }
+            cursor = mReadableDB.query(TABLE, columns, selection, selectionArgs, null, null, null);
+
+        }catch (Exception e){
+            Log.d(TAG, "SEARCH EXCEPTION! " + e);
+        }
+        return cursor;
+    }
 }

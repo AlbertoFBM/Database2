@@ -16,14 +16,20 @@
 
 package com.aserrano.database2;
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.text.TextUtils;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
@@ -74,6 +80,23 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.action_search:
+                Intent intent = new Intent(getBaseContext(), SearchActivity.class);
+                startActivity(intent);
+                return true;
+        }
+        return super.onOptionsItemSelected(item);
+    }
+
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         // Add code to update the database.
@@ -100,4 +123,28 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+//    public void showAlert(View view){
+//
+//        AlertDialog.Builder myAlertBuilder = new AlertDialog.Builder(MainActivity.this);
+//
+//        myAlertBuilder.setTitle("DELETE");
+//
+//        myAlertBuilder.setMessage("Are you sure?");
+//
+//        myAlertBuilder.setPositiveButton("DELETE", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                System.out.println("Deleted");
+//            }
+//        });
+//
+//        myAlertBuilder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+//            @Override
+//            public void onClick(DialogInterface dialogInterface, int i) {
+//                System.out.println("Not deleted");
+//            }
+//        });
+//
+//    }
 }
